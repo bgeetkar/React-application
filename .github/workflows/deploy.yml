@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - create-graphql-application
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Terraform init
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Terraform apply
+        run: |
+          cd terraform/lambda-project/terrform-code/templates/stack/
+          terraform init
+          terraform plan
+          terraform apply 
+
+      # Add other steps for building and deploying your application
